@@ -1,0 +1,9 @@
+{
+  "name": "@easyserver-project/apps",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@easyserver-project/server": "^1.0.34"
+  }
+}

@@ -1,0 +1,178 @@
+[
+  {
+    "_id": "sonarr",
+    "image": "ghcr.io/linuxserver/sonarr",
+    "configPath": "/config",
+    "mountData": true,
+    "services": 8989,
+    "environment": [
+      "PUID=1000",
+      "PGID=1000",
+      "TZ=Europe/Stockholm"
+    ],
+    "name": "Sonarr",
+    "logo": "https://via.placeholder.com/60x60",
+    "description": "Sonarr is a PVR for Usenet and BitTorrent users. It can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them. It can also be configured to automatically upgrade the quality of files already downloaded when a better quality format becomes available."
+  },
+  {
+    "_id": "radarr",
+    "image": "ghcr.io/linuxserver/radarr",
+    "configPath": "/config",
+    "mountData": true,
+    "services": 7878,
+    "environment": [
+      "PUID=1000",
+      "PGID=1000",
+      "TZ=Europe/Stockholm"
+    ]
+  },
+  {
+    "_id": "keycloak",
+    "image": "jboss/keycloak",
+    "configPath": "/opt/jboss/keycloak/standalone/data/",
+    "services": [
+      {
+        "port": 8080,
+        "insecure": true
+      }
+    ],
+    "environment": [
+      "PROXY_ADDRESS_FORWARDING=true",
+      "DB_VENDOR=h2"
+    ]
+  },
+  {
+    "_id": "nexus",
+    "image": "sonatype/nexus3",
+    "configPath": "/nexus-data",
+    "services": [
+      {
+        "name": "nexus",
+        "port": 8081,
+        "insecure": true
+      },
+      {
+        "name": "docker",
+        "port": 9000,
+        "insecure": true
+      }
+    ]
+  },
+  {
+    "_id": "transmission",
+    "image": "ghcr.io/linuxserver/transmission",
+    "services": [
+      {
+        "port": 9091,
+        "insecure": true
+      }
+    ],
+    "configPath": "/config",
+    "mountData": true,
+    "environment": [
+      "USER=#USERNAME#",
+      "PASS=#PASSWORD#",
+      "PUID=1000",
+      "PGID=1000",
+      "TZ=Europe/Stockholm"
+    ]
+  },
+  {
+    "_id": "plex",
+    "image": "ghcr.io/linuxserver/plex",
+    "configPath": "/config",
+    "mountData": true,
+    "hostNet": true,
+    "privileged": true,
+    "environment": [
+      "PUID=1000",
+      "PGID=1000",
+      "TZ=Europe/Stockholm"
+    ]
+  },
+  {
+    "_id": "guacamole",
+    "image": "oznu/guacamole",
+    "configPath": "/config",
+    "services": 8080
+  },
+  {
+    "_id": "jackett",
+    "image": "ghcr.io/linuxserver/jackett",
+    "configPath": "/config",
+    "services": 9117
+  },
+  {
+    "_id": "rethinkdb",
+    "image": "rethinkdb",
+    "configPath": "/data",
+    "services": 8080
+  },
+  {
+    "_id": "pact",
+    "image": "pactfoundation/pact-broker",
+    "services": [
+      {
+        "port": 9292,
+        "insecure": true
+      }
+    ],
+    "environment": [
+      "PACT_BROKER_PORT=9292",
+      "PACT_BROKER_DATABASE_URL=postgres://#USERNAME#:#PASSWORD#@pact--postgres/postgres",
+      "PACT_BROKER_LOG_LEVEL=INFO",
+      "PACT_BROKER_SQL_LOG_LEVEL=DEBUG",
+      "PACT_BROKER_BASIC_AUTH_USERNAME=#USERNAME#",
+      "PACT_BROKER_BASIC_AUTH_PASSWORD=#PASSWORD#"
+    ],
+    "sidecars": {
+      "postgres": {
+        "image": "postgres",
+        "configPath": "/var/lib/postgresql/data",
+        "environment": [
+          "POSTGRES_USER=#USERNAME#",
+          "POSTGRES_PASSWORD=#PASSWORD#",
+          "POSTGRES_DB=postgres"
+        ]
+      }
+    }
+  },
+  {
+    "_id": "readarr",
+    "image": "hotio/readarr:nightly",
+    "services": 8787,
+    "environment": [
+      "PUID=1000",
+      "PGID=1000",
+      "UMASK=002",
+      "TZ=\"Europe/Stockholm\""
+    ],
+    "configPath": "/config",
+    "mountData": true
+  },
+  {
+    "_id": "samba",
+    "image": "ahmetozer/samba",
+    "systemApp": true,
+    "mountData": "/share/root",
+    "environment": [
+      "sharename=files",
+      "password=#PASSWORD#",
+      "username=#USERNAME#"
+    ],
+    "services": 445,
+    "tty": true
+  },
+  {
+    "_id": "audacity",
+    "image": "ghcr.io/linuxserver/audacity",
+    "configPath": "/config",
+    "mountData": true,
+    "services": 3000,
+    "environment": [
+      "PUID=1000",
+      "PGID=1000",
+      "TZ=Europe/Stockholm"
+    ]
+  }
+]

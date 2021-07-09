@@ -1,0 +1,10 @@
+{
+    "json.schemas": [
+        {
+            "fileMatch": [
+                "/apps.json"
+            ],
+            "url": "./node_modules/@easyserver-project/server/dist/schema.json"
+        }
+    ]
+}
