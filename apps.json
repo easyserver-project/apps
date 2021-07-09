@@ -39,7 +39,10 @@
     "environment": [
       "PROXY_ADDRESS_FORWARDING=true",
       "DB_VENDOR=h2"
-    ]
+    ],
+    "name": "KeyCloak",
+    "logo": "https://via.placeholder.com/60x60",
+    "description": "Kecloak is ..."
   },
   {
     "_id": "nexus",

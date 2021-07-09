@@ -1,9 +1,17 @@
 {
   "name": "@easyserver-project/apps",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "license": "MIT",
   "dependencies": {
-    "@easyserver-project/server": "^1.0.34"
+    "@easyserver-project/server": "^1.0.34",
+    "@types/mongodb": "^3.6.20",
+    "dotenv": "^10.0.0",
+    "mongodb": "^3.6.10",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.5"
+  },
+  "scripts": {
+    "start": "ts-node index.ts"
   }
 }
