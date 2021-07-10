@@ -27,6 +27,21 @@
     ]
   },
   {
+    "_id": "emby",
+    "image": "ghcr.io/linuxserver/emby",
+    "mountData": true,
+    "configPath": "/config",
+    "environment": [
+      "PUID=1000",
+      "PGID=1000",
+      "TZ=Europe/Stockholm"
+    ],
+    "services": 8096,
+    "name": "Emby",
+    "description": "Emby organizes video, music, live TV, and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices. This container is packaged as a standalone emby Media Server.",
+    "logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/emby-logo.png"
+  },
+  {
     "_id": "keycloak",
     "image": "jboss/keycloak",
     "configPath": "/opt/jboss/keycloak/standalone/data/",
