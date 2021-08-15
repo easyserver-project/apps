@@ -1,0 +1,176 @@
+version: \"3\"
+services:
+  sonarr:
+    image: ghcr.io/linuxserver/sonarr
+    restart: always
+    container_name: sonarr
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.sonarr.rule=Host(`sonarr.fredriklowenhamn.se`)
+      - traefik.http.services.sonarr.loadbalancer.server.port=8989
+      - traefik.http.routers.sonarr.service=sonarr
+      - traefik.http.middlewares.sonarr.forwardauth.address=http://forward-auth:4321/__loggedin
+      - traefik.http.routers.sonarr.middlewares=sonarr@docker
+      - traefik.http.routers.sonarr.tls.certresolver=default
+      - traefik.http.routers.sonarr.entrypoints=websecure
+    volumes:
+      - /media/data/AppData/sonarr:/config
+      - /media/data:/data
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Stockholm
+  radarr:
+    image: ghcr.io/linuxserver/radarr
+    restart: always
+    container_name: radarr
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.radarr.rule=Host(`radarr.fredriklowenhamn.se`)
+      - traefik.http.services.radarr.loadbalancer.server.port=7878
+      - traefik.http.routers.radarr.service=radarr
+      - traefik.http.middlewares.radarr.forwardauth.address=http://forward-auth:4321/__loggedin
+      - traefik.http.routers.radarr.middlewares=radarr@docker
+      - traefik.http.routers.radarr.tls.certresolver=default
+      - traefik.http.routers.radarr.entrypoints=websecure
+    volumes:
+      - /media/data/AppData/radarr:/config
+      - /media/data:/data
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Stockholm
+  emby:
+    image: ghcr.io/linuxserver/emby
+    restart: always
+    container_name: emby
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.emby.rule=Host(`emby.fredriklowenhamn.se`)
+      - traefik.http.services.emby.loadbalancer.server.port=8096
+      - traefik.http.routers.emby.service=emby
+      - traefik.http.middlewares.emby.forwardauth.address=http://forward-auth:4321/__loggedin
+      - traefik.http.routers.emby.middlewares=emby@docker
+      - traefik.http.routers.emby.tls.certresolver=default
+      - traefik.http.routers.emby.entrypoints=websecure
+    volumes:
+      - /media/data/AppData/emby:/config
+      - /media/data:/data
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Stockholm
+    devices:
+      - /dev/dri:/dev/dri
+      - /dev/vchiq:/dev/vchiq
+      - /dev/video10:/dev/video10
+      - /dev/video11:/dev/video11
+      - /dev/video12:/dev/video12
+  transmission:
+    image: ghcr.io/linuxserver/transmission
+    restart: always
+    container_name: transmission
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.transmission.rule=Host(`transmission.fredriklowenhamn.se`)
+      - traefik.http.services.transmission.loadbalancer.server.port=9091
+      - traefik.http.routers.transmission.service=transmission
+      - traefik.http.routers.transmission.tls.certresolver=default
+      - traefik.http.routers.transmission.entrypoints=websecure
+    volumes:
+      - /media/data/AppData/transmission:/config
+      - /media/data:/data
+    environment:
+      - USER=fredrik
+      - PASS=Harsladd2
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Stockholm
+  plex:
+    image: ghcr.io/linuxserver/plex
+    restart: always
+    container_name: plex
+    network_mode: host
+    volumes:
+      - /media/data/AppData/plex:/config
+      - /media/data:/data
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Stockholm
+    privileged: true
+  jackett:
+    image: ghcr.io/linuxserver/jackett
+    restart: always
+    container_name: jackett
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.jackett.rule=Host(`jackett.fredriklowenhamn.se`)
+      - traefik.http.services.jackett.loadbalancer.server.port=9117
+      - traefik.http.routers.jackett.service=jackett
+      - traefik.http.middlewares.jackett.forwardauth.address=http://forward-auth:4321/__loggedin
+      - traefik.http.routers.jackett.middlewares=jackett@docker
+      - traefik.http.routers.jackett.tls.certresolver=default
+      - traefik.http.routers.jackett.entrypoints=websecure
+    volumes:
+      - /media/data/AppData/jackett:/config
+  samba:
+    image: ahmetozer/samba
+    restart: always
+    container_name: samba
+    ports:
+      - 445:445
+    tty: true
+    volumes:
+      - /media/data:/share/root
+    environment:
+      - sharename=files
+      - password=Harsladd2
+      - username=fredrik
+  traefik:
+    container_name: traefik
+    image: traefik
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /media/data/AppData/traefik:/data
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.traefik.rule=Host(`traefik.fredriklowenhamn.se`)
+      - traefik.http.services.traefik.loadbalancer.server.port=8080
+      - traefik.http.routers.traefik.service=traefik
+      - traefik.http.middlewares.traefik.forwardauth.address=http://forward-auth:4321/__loggedin
+      - traefik.http.routers.traefik.middlewares=traefik@docker
+      - traefik.http.routers.traefik.tls.certresolver=default
+      - traefik.http.routers.traefik.entrypoints=websecure
+    ports:
+      - 80:80
+      - 443:443
+    command:
+      - --providers.docker=true
+      - --providers.docker.exposedByDefault=false
+      - --api.insecure=true
+      - --log.level=DEBUG
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      - --entrypoints.web.http.redirections.entryPoint.to=websecure
+      - --certificatesresolvers.default.acme.httpchallenge=true
+      - --certificatesresolvers.default.acme.httpchallenge.entrypoint=web
+      - --certificatesresolvers.default.acme.storage=/data/acme.json
+  forward-auth:
+    container_name: forward-auth
+    image: lowet84/client-login
+    restart: always
+    environment:
+      - SECRET_KEY=werwerw3o8u8bounbeo86mvosn58o4yimyi45nttv4busten4v5ute4m5vue
+      - USERNAME=fredrik
+      - PASSWORD=Harsladd2
+      - DOMAIN=fredriklowenhamn.se
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.auth.rule=PathPrefix(`/__login`)
+      - traefik.http.routers.auth.priority=1000
+      - traefik.http.services.auth.loadbalancer.server.port=4321
+      - traefik.http.routers.auth.entrypoints=websecure
+      - traefik.http.routers.auth.service=auth
+      - traefik.http.routers.auth.tls.certresolver=default

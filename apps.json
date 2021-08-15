@@ -39,7 +39,8 @@
     "services": 8096,
     "name": "Emby",
     "description": "Emby organizes video, music, live TV, and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices. This container is packaged as a standalone emby Media Server.",
-    "logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/emby-logo.png"
+    "logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/emby-logo.png",
+    "devices": ["/dev/dri", "/dev/vchiq", "/dev/video10", "/dev/video11", "/dev/video12"]
   },
   {
     "_id": "keycloak",
@@ -192,5 +193,13 @@
       "PGID=1000",
       "TZ=Europe/Stockholm"
     ]
+  },
+  {
+    "_id": "openspeedtest",
+    "name": "OpenSpeedTest",
+    "image": "openspeedtest/latest",
+    "services": 3000,
+    "description": "Pure HTML5 Network Performance Estimation Tool.",
+    "logo": "https://d36jcksde1wxzq.cloudfront.net/be7833db9bddb4494d2a7c3dd659199a.png"
   }
 ]
