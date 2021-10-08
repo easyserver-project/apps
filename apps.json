@@ -5,11 +5,7 @@
     "configPath": "/config",
     "mountData": true,
     "services": 8989,
-    "environment": [
-      "PUID=1000",
-      "PGID=1000",
-      "TZ=Europe/Stockholm"
-    ],
+    "environment": ["PUID=1000", "PGID=1000", "TZ=Europe/Stockholm"],
     "name": "Sonarr",
     "logo": "https://via.placeholder.com/60x60",
     "description": "Sonarr is a PVR for Usenet and BitTorrent users. It can monitor multiple RSS feeds for new episodes of your favorite shows and will grab, sort and rename them. It can also be configured to automatically upgrade the quality of files already downloaded when a better quality format becomes available."
@@ -20,27 +16,25 @@
     "configPath": "/config",
     "mountData": true,
     "services": 7878,
-    "environment": [
-      "PUID=1000",
-      "PGID=1000",
-      "TZ=Europe/Stockholm"
-    ]
+    "environment": ["PUID=1000", "PGID=1000", "TZ=Europe/Stockholm"]
   },
   {
     "_id": "emby",
     "image": "ghcr.io/linuxserver/emby",
     "mountData": true,
     "configPath": "/config",
-    "environment": [
-      "PUID=1000",
-      "PGID=1000",
-      "TZ=Europe/Stockholm"
-    ],
+    "environment": ["PUID=1000", "PGID=1000", "TZ=Europe/Stockholm"],
     "services": 8096,
     "name": "Emby",
     "description": "Emby organizes video, music, live TV, and photos from personal media libraries and streams them to smart TVs, streaming boxes and mobile devices. This container is packaged as a standalone emby Media Server.",
     "logo": "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/emby-logo.png",
-    "devices": ["/dev/dri", "/dev/vchiq", "/dev/video10", "/dev/video11", "/dev/video12"]
+    "devices": [
+      "/dev/dri",
+      "/dev/vchiq",
+      "/dev/video10",
+      "/dev/video11",
+      "/dev/video12"
+    ]
   },
   {
     "_id": "keycloak",
@@ -52,10 +46,7 @@
         "insecure": true
       }
     ],
-    "environment": [
-      "PROXY_ADDRESS_FORWARDING=true",
-      "DB_VENDOR=h2"
-    ],
+    "environment": ["PROXY_ADDRESS_FORWARDING=true", "DB_VENDOR=h2"],
     "name": "KeyCloak",
     "logo": "https://via.placeholder.com/60x60",
     "description": "Kecloak is ..."
@@ -86,7 +77,7 @@
         "insecure": true
       }
     ],
-    "configPath": "/config",
+    "configPath": { "config": "/config", "downloads": "/downloads" },
     "mountData": true,
     "environment": [
       "USER=#USERNAME#",
@@ -103,11 +94,7 @@
     "mountData": true,
     "hostNet": true,
     "privileged": true,
-    "environment": [
-      "PUID=1000",
-      "PGID=1000",
-      "TZ=Europe/Stockholm"
-    ]
+    "environment": ["PUID=1000", "PGID=1000", "TZ=Europe/Stockholm"]
   },
   {
     "_id": "guacamole",
@@ -188,11 +175,7 @@
     "configPath": "/config",
     "mountData": true,
     "services": 3000,
-    "environment": [
-      "PUID=1000",
-      "PGID=1000",
-      "TZ=Europe/Stockholm"
-    ]
+    "environment": ["PUID=1000", "PGID=1000", "TZ=Europe/Stockholm"]
   },
   {
     "_id": "openspeedtest",
@@ -201,5 +184,35 @@
     "services": 3000,
     "description": "Pure HTML5 Network Performance Estimation Tool.",
     "logo": "https://d36jcksde1wxzq.cloudfront.net/be7833db9bddb4494d2a7c3dd659199a.png"
+  },
+  {
+    "_id": "insync",
+    "name": "Insync",
+    "image": "tiredofit/insync",
+    "description": "Dockerfile to build an Insync container image to synchronize Google Drive.",
+    "logo": "https://via.placeholder.com/60x60",
+    "configPath": "/data",
+    "environment": [
+      "INSYNC1_USERNAME=#INSYNC_USERNAME#",
+      "INSYNC1_AUTH_CODE=#INSYNC_AUTH_CODE#"
+    ],
+    "variables": ["INSYNC_USERNAME", "INSYNC_AUTH_CODE"]
+  },
+  {
+    "_id": "valheim",
+    "name": "Valheim Server",
+    "description": "Valheim Server in a Docker Container",
+    "logo": "https://raw.githubusercontent.com/lloesche/valheim-server-docker/main/misc/Logo_valheim.png",
+    "image": "lloesche/valheim-server",
+    "configPath": {
+      "config": "/config",
+      "data": "/opt/valheim"
+    },
+    "environment": [
+      "SERVER_NAME=#SERVER_NAME#",
+      "WORLD_NAME=#WORLD_NAME#",
+      "SERVER_PASS=#SERVER_PASS#"
+    ],
+    "variables": ["SERVER_NAME", "WORLD_NAME", "SERVER_PASS"]
   }
 ]

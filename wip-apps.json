@@ -1,0 +1,51 @@
+[
+  {
+    "_id": "parse",
+    "name": "Parse",
+    "logo": "https://parseplatform.org/img/logo.svg",
+    "description": "Parse Dashboard is a standalone dashboard for managing your Parse apps. You can use it to manage your Parse Server apps and your apps that are running on Parse.com.",
+    "image": "docker.io/bitnami/parse:4",
+    "environment": [
+      "PARSE_DATABASE_HOST=parse--mongodb",
+      "PARSE_DATABASE_PORT_NUMBER=27017",
+      "PARSE_DATABASE_USER=bn_parse",
+      "PARSE_DATABASE_NAME=bitnami_parse",
+      "PARSE_DATABASE_PASSWORD=bitnami123"
+    ],
+    "services": [{ "port": 1337, "insecure": true }],
+    "configPath": "/bitnami/parse",
+    "sidecars": {
+      "mongodb": {
+        "image": "docker.io/bitnami/mongodb:4.2",
+        "configPath": "/bitnami/mongodb",
+        "environment": [
+          "MONGODB_USERNAME=bn_parse",
+          "MONGODB_DATABASE=bitnami_parse",
+          "MONGODB_PASSWORD=bitnami123"
+        ]
+      }
+    }
+  },
+  {
+    "_id": "parse-dashboard",
+    "name": "Parse Dashboard",
+    "logo": "https://parseplatform.org/img/logo.svg",
+    "image": "bitnami/parse-dashboard:latest",
+    "description": "Parse Dashboard is a standalone dashboard for managing your Parse apps. You can use it to manage your Parse Server apps and your apps that are running on Parse.com.",
+    "services": 4040,
+    "environment": [
+      "PARSE_DASHBOARD_PARSE_HOST=parse.fredriklowenhamn.se",
+      "PARSE_DASHBOARD_PARSE_PORT_NUMBER=443",
+      "PARSE_DASHBOARD_PARSE_PROTOCOL=https"
+    ],
+    "configPath": "/bitnami"
+  },
+  {
+    "_id": "portainer",
+    "name": "Portainer",
+    "description": "Portainer is a lightweight management UI which allows you to easily manage your Docker AND Kubernetes clusters.",
+    "logo": "https://developer.asustor.com/uploadIcons/0020_999_1601372094_Portainer_256.png",
+    "image": "portainer/portainer-ce",
+    "configPath": "/data"
+  }
+]
