@@ -213,6 +213,19 @@
       "WORLD_NAME=#WORLD_NAME#",
       "SERVER_PASS=#SERVER_PASS#"
     ],
+    "systemApp": true,
+    "services": [
+      { "port": 2456, "type": "udp" },
+      { "port": 2457, "type": "udp" }
+    ],
     "variables": ["SERVER_NAME", "WORLD_NAME", "SERVER_PASS"]
+  },
+  {
+    "_id": "spa",
+    "name": "Single spa demo",
+    "description": "Demo client",
+    "logo": "https://via.placeholder.com/60x60",
+    "image": "ghcr.io/frlow/single-spa-demo",
+    "services": 8080
   }
 ]
